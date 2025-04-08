@@ -19,12 +19,13 @@ class Command(BaseCommand):
             User(email='user2@example.com', name='User Two', age=25),
             User(email='user3@example.com', name='User Three', age=30),
         ]
-        User.objects.bulk_create(users)
+        for user in users:
+            user.save()  # Save individually to populate primary keys
 
         # Create teams
         team = Team(name='Team Alpha')
         team.save()
-        team.members.set(users)
+        team.members.set(users)  # Associate users with the team
 
         # Create activities
         activities = [
